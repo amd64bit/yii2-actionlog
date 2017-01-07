@@ -5,6 +5,7 @@ namespace atans\actionlog\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
+use yii\behaviors\AttributeBehavior;
 use yii\web\Application as WebApplication;
 
 /**
@@ -34,14 +35,30 @@ class ActionLog extends ActiveRecord
     /**
      * @var string
      */
-    private $data;
+    //private $data;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%actionlog}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class'      => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ],
+                'value'      => date('Y-m-d H:i:s'),
+            ],
+        ];
     }
 
     /**
@@ -135,7 +152,7 @@ class ActionLog extends ActiveRecord
      * @param string $category
      * @return ActionLog|null
      */
-    public function addError($message, array $data = null, $category = self::CATEGORY_DEFAULT)
+    public function error($message, array $data = null, $category = self::CATEGORY_DEFAULT)
     {
         return self::add(self::LEVEL_ERROR, $message, $data, $category);
     }
@@ -148,7 +165,7 @@ class ActionLog extends ActiveRecord
      * @param string $category
      * @return ActionLog|null
      */
-    public function addInfo($message, array $data = null, $category = self::CATEGORY_DEFAULT)
+    public static function info($message, array $data = null, $category = self::CATEGORY_DEFAULT)
     {
         return self::add(self::LEVEL_INFO, $message, $data, $category);
     }
@@ -161,7 +178,7 @@ class ActionLog extends ActiveRecord
      * @param string $category
      * @return ActionLog|null
      */
-    public function addWarning($message, array $data = null, $category = self::CATEGORY_DEFAULT)
+    public static function warning($message, array $data = null, $category = self::CATEGORY_DEFAULT)
     {
         return self::add(self::LEVEL_WARNING, $message, $data, $category);
     }

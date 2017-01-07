@@ -1,6 +1,6 @@
 <?php
 
-namespace atans\history\migrations;
+namespace atans\actionlog\migrations;
 
 use Yii;
 use yii\base\NotSupportedException;
