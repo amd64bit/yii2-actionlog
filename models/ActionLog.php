@@ -152,7 +152,7 @@ class ActionLog extends ActiveRecord
      * @param string $category
      * @return ActionLog|null
      */
-    public function error($message, array $data = null, $category = self::CATEGORY_DEFAULT)
+    public static function error($message, array $data = null, $category = self::CATEGORY_DEFAULT)
     {
         return self::add(self::LEVEL_ERROR, $message, $data, $category);
     }
