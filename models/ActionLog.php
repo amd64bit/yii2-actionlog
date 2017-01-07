@@ -25,6 +25,7 @@ class ActionLog extends ActiveRecord
 {
     const LEVEL_INFO    = 'info';
     const LEVEL_ERROR   = 'error';
+    const LEVEL_SUCCESS = 'success';
     const LEVEL_WARNING = 'warning';
 
     /**
@@ -140,6 +141,7 @@ class ActionLog extends ActiveRecord
         return [
             self::LEVEL_ERROR   => Yii::t('actionlog', 'Error'),
             self::LEVEL_INFO    => Yii::t('actionlog', 'Info'),
+            self::LEVEL_SUCCESS => Yii::t('actionlog', 'Success'),
             self::LEVEL_WARNING => Yii::t('actionlog', 'Warning'),
         ];
     }
@@ -168,6 +170,19 @@ class ActionLog extends ActiveRecord
     public static function info($message, array $data = null, $category = self::CATEGORY_DEFAULT)
     {
         return self::add(self::LEVEL_INFO, $message, $data, $category);
+    }
+
+    /**
+     * Add success
+     *
+     * @param string $message
+     * @param null|array $data
+     * @param string $category
+     * @return ActionLog|null
+     */
+    public static function success($message, array $data = null, $category = self::CATEGORY_DEFAULT)
+    {
+        return self::add(self::LEVEL_SUCCESS, $message, $data, $category);
     }
 
     /**
