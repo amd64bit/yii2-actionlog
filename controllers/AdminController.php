@@ -29,7 +29,7 @@ class AdminController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => $module->adminRules,
+                        'roles' => $module->adminRoles,
                     ],
                 ],
             ],
@@ -46,9 +46,13 @@ class AdminController extends Controller
         $searchModel = new ActionLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        /* @var $module Module */
+        $module = Module::getInstance();
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel'       => $searchModel,
+            'dataProvider'      => $dataProvider,
+            'usernameAttribute' => $module->usernameAttribute,
         ]);
     }
 

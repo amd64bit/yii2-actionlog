@@ -6,6 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel atans\actionlog\models\ActionLogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $usernameAttribute string */
 
 $this->title = Yii::t('actionlog', 'Action Logs');
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,10 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 [
                     'attribute' => 'user_id',
-                    'value' => function($model){
+                    'value' => function($model) use ($usernameAttribute) {
+                        /* @var $user yii\db\ActiveRecord|yii\web\IdentityInterface|null */
                         $user = $model->user;
                         if ($user instanceof yii\web\IdentityInterface) {
-                            return $user->hasAttribute('username') ? $user->username . ' #'. $user->getId() : $user->getId();
+                            return $user->hasAttribute($usernameAttribute) ? $user->$usernameAttribute . ' #'. $user->getId() : $user->getId();
                         }
 
                         return $model->user_id;

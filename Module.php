@@ -7,5 +7,13 @@ use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
-    public $adminRules = ['admin'];
+    /**
+     * @var array
+     */
+    public $adminRoles = ['admin'];
+
+    /**
+     * @var string
+     */
+    public $usernameAttribute = 'username';
 }
